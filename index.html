@@ -49,6 +49,7 @@
             margin: 15px;
             background: linear-gradient(135deg, #e0eafc, #cfdef3);
             color: #333;
+            user-select: none;
         }
         .page-header {
             text-align: center;
@@ -75,6 +76,7 @@
             border-radius: 8px;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1), inset 0 1px 2px rgba(255, 255, 255, 0.3);
             transition: transform 0.2s, box-shadow 0.2s;
+            display: none;
         }
         .frame:hover {
             transform: translateY(-3px);
@@ -90,6 +92,59 @@
             color: #2c3e50;
             font-size: 1.2em;
             text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+        }
+        .frame-header {
+            background: #dfe6e9;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 1.2em;
+            color: #2c3e50;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .frame-header:hover {
+            background: #b2bec3;
+        }
+        .frame-password {
+            display: none;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .frame-password.active {
+            display: block;
+        }
+        .frame-password input {
+            padding: 5px;
+            margin-right: 5px;
+            border: 1px solid #dfe6e9;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        .frame-password button {
+            padding: 5px 10px;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            transition: background 0.2s;
+        }
+        .frame-password button:hover {
+            background: linear-gradient(45deg, #2980b9, #2c3e50);
+        }
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+        .frame-content {
+            display: none;
         }
         .input-group {
             display: flex;
@@ -201,167 +256,232 @@
         .reset-button:hover {
             background: linear-gradient(45deg, #d35400, #c0392b);
         }
+        .show-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .show-section label {
+            font-size: 14px;
+            font-weight: bold;
+            margin-right: 10px;
+            color: #2c3e50;
+        }
+        .show-section select, .show-section button {
+            padding: 5px 10px;
+            font-size: 12px;
+            border-radius: 4px;
+        }
+        .show-section button {
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .show-section button:hover {
+            background: linear-gradient(45deg, #27ae60, #219653);
+        }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;" onkeydown="if(event.ctrlKey && event.key === 'u') return false;">
     <h1 class="page-header">GÜNLÜK HESAP İŞLEMLERİ</h1>
 
     <div class="container">
         <div class="frame frame-anac">
-            <h2>Anaç GSM</h2>
-            <div class="input-group">
-                <input type="number" id="amount-anac" placeholder="Tutar" step="0.01" class="tutar-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-anac').click()">
-                <input type="number" id="percentage-anac" placeholder="5.5" value="5.5" step="0.01" class="yuzde-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-anac').click()">
-                <button id="add-anac" class="add-button" onclick="addToList('anac')">Ekle</button>
-                <button class="clear-button" onclick="clearList('anac')">Tümünü Sil</button>
+            <div class="frame-header" onclick="togglePassword('anac')">Anaç GSM</div>
+            <div class="frame-password" id="password-anac">
+                <input type="password" id="password-input-anac" placeholder="Şifre" onkeydown="if(event.key === 'Enter') checkPassword('anac')">
+                <button onclick="checkPassword('anac')">Giriş</button>
+                <div class="error-message" id="error-anac">Şifre Yanlış</div>
             </div>
-            <table id="table-anac">
-                <thead>
-                    <tr>
-                        <th>Tutar</th>
-                        <th>Yüzde</th>
-                        <th>Kesinti</th>
-                        <th>Net</th>
-                        <th>İşlem</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-                <tfoot>
-                    <tr>
-                        <td>Toplam: <span id="total-amount-anac">0,00</span></td>
-                        <td></td>
-                        <td><span id="total-deduction-anac">0,00</span></td>
-                        <td><span id="total-net-anac">0,00</span></td>
-                        <td></td>
-                    </tr>
-                </tfoot>
-            </table>
+            <div class="frame-content" id="content-anac">
+                <h2>Anaç GSM</h2>
+                <div class="input-group">
+                    <input type="number" id="amount-anac" placeholder="Tutar" step="0.01" class="tutar-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-anac').click()">
+                    <input type="number" id="percentage-anac" placeholder="5.5" value="5.5" step="0.01" class="yuzde-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-anac').click()">
+                    <button id="add-anac" class="add-button" onclick="addToList('anac')">Ekle</button>
+                    <button class="clear-button" onclick="clearList('anac')">Tümünü Sil</button>
+                </div>
+                <table id="table-anac">
+                    <thead>
+                        <tr>
+                            <th>Tutar</th>
+                            <th>Yüzde</th>
+                            <th>Kesinti</th>
+                            <th>Net</th>
+                            <th>İşlem</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                        <tr>
+                            <td>Toplam: <span id="total-amount-anac">0,00</span></td>
+                            <td></td>
+                            <td><span id="total-deduction-anac">0,00</span></td>
+                            <td><span id="total-net-anac">0,00</span></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
         </div>
 
         <div class="frame frame-akfa">
-            <h2>Akfa GSM</h2>
-            <div class="input-group">
-                <input type="number" id="amount-akfa" placeholder="Tutar" step="0.01" class="tutar-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-akfa').click()">
-                <input type="number" id="percentage-akfa" placeholder="4.5" value="4.5" step="0.01" class="yuzde-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-akfa').click()">
-                <button id="add-akfa" class="add-button" onclick="addToList('akfa')">Ekle</button>
-                <button class="clear-button" onclick="clearList('akfa')">Tümünü Sil</button>
+            <div class="frame-header" onclick="togglePassword('akfa')">Akfa GSM</div>
+            <div class="frame-password" id="password-akfa">
+                <input type="password" id="password-input-akfa" placeholder="Şifre" onkeydown="if(event.key === 'Enter') checkPassword('akfa')">
+                <button onclick="checkPassword('akfa')">Giriş</button>
+                <div class="error-message" id="error-akfa">Şifre Yanlış</div>
             </div>
-            <table id="table-akfa">
-                <thead>
-                    <tr>
-                        <th>Tutar</th>
-                        <th>Yüzde</th>
-                        <th>Kesinti</th>
-                        <th>Net</th>
-                        <th>İşlem</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-                <tfoot>
-                    <tr>
-                        <td>Toplam: <span id="total-amount-akfa">0,00</span></td>
-                        <td></td>
-                        <td><span id="total-deduction-akfa">0,00</span></td>
-                        <td><span id="total-net-akfa">0,00</span></td>
-                        <td></td>
-                    </tr>
-                </tfoot>
-            </table>
+            <div class="frame-content" id="content-akfa">
+                <h2>Akfa GSM</h2>
+                <div class="input-group">
+                    <input type="number" id="amount-akfa" placeholder="Tutar" step="0.01" class="tutar-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-akfa').click()">
+                    <input type="number" id="percentage-akfa" placeholder="4.5" value="4.5" step="0.01" class="yuzde-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-akfa').click()">
+                    <button id="add-akfa" class="add-button" onclick="addToList('akfa')">Ekle</button>
+                    <button class="clear-button" onclick="clearList('akfa')">Tümünü Sil</button>
+                </div>
+                <table id="table-akfa">
+                    <thead>
+                        <tr>
+                            <th>Tutar</th>
+                            <th>Yüzde</th>
+                            <th>Kesinti</th>
+                            <th>Net</th>
+                            <th>İşlem</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                        <tr>
+                            <td>Toplam: <span id="total-amount-akfa">0,00</span></td>
+                            <td></td>
+                            <td><span id="total-deduction-akfa">0,00</span></td>
+                            <td><span id="total-net-akfa">0,00</span></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
         </div>
 
         <div class="frame frame-ben">
-            <h2>Ben</h2>
-            <div class="input-group">
-                <input type="number" id="amount-ben" placeholder="Tutar" step="0.01" class="tutar-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-ben').click()">
-                <input type="number" id="percentage-ben" placeholder="5.5" value="5.5" step="0.01" class="yuzde-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-ben').click()">
-                <button id="add-ben" class="add-button" onclick="addToList('ben')">Ekle</button>
-                <button class="clear-button" onclick="clearList('ben')">Tümünü Sil</button>
+            <div class="frame-header" onclick="togglePassword('ben')">Ben</div>
+            <div class="frame-password" id="password-ben">
+                <input type="password" id="password-input-ben" placeholder="Şifre" onkeydown="if(event.key === 'Enter') checkPassword('ben')">
+                <button onclick="checkPassword('ben')">Giriş</button>
+                <div class="error-message" id="error-ben">Şifre Yanlış</div>
             </div>
-            <table id="table-ben">
-                <thead>
-                    <tr>
-                        <th>Tutar</th>
-                        <th>Yüzde</th>
-                        <th>Kesinti</th>
-                        <th>Net</th>
-                        <th>İşlem</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-                <tfoot>
-                    <tr>
-                        <td>Toplam: <span id="total-amount-ben">0,00</span></td>
-                        <td></td>
-                        <td><span id="total-deduction-ben">0,00</span></td>
-                        <td><span id="total-net-ben">0,00</span></td>
-                        <td></td>
-                    </tr>
-                </tfoot>
-            </table>
+            <div class="frame-content" id="content-ben">
+                <h2>Ben</h2>
+                <div class="input-group">
+                    <input type="number" id="amount-ben" placeholder="Tutar" step="0.01" class="tutar-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-ben').click()">
+                    <input type="number" id="percentage-ben" placeholder="5.5" value="5.5" step="0.01" class="yuzde-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-ben').click()">
+                    <button id="add-ben" class="add-button" onclick="addToList('ben')">Ekle</button>
+                    <button class="clear-button" onclick="clearList('ben')">Tümünü Sil</button>
+                </div>
+                <table id="table-ben">
+                    <thead>
+                        <tr>
+                            <th>Tutar</th>
+                            <th>Yüzde</th>
+                            <th>Kesinti</th>
+                            <th>Net</th>
+                            <th>İşlem</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                        <tr>
+                            <td>Toplam: <span id="total-amount-ben">0,00</span></td>
+                            <td></td>
+                            <td><span id="total-deduction-ben">0,00</span></td>
+                            <td><span id="total-net-ben">0,00</span></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
         </div>
     </div>
 
     <div class="container-bottom">
         <div class="frame frame-ayd">
-            <h2>Ayd GSM</h2>
-            <div class="input-group">
-                <input type="number" id="amount-ayd" placeholder="Tutar" step="0.01" class="tutar-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-ayd').click()">
-                <input type="number" id="percentage-ayd" placeholder="3.9" value="3.9" step="0.01" class="yuzde-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-ayd').click()">
-                <button id="add-ayd" class="add-button" onclick="addToList('ayd')">Ekle</button>
-                <button class="clear-button" onclick="clearList('ayd')">Tümünü Sil</button>
+            <div class="frame-header" onclick="togglePassword('ayd')">Ayd GSM</div>
+            <div class="frame-password" id="password-ayd">
+                <input type="password" id="password-input-ayd" placeholder="Şifre" onkeydown="if(event.key === 'Enter') checkPassword('ayd')">
+                <button onclick="checkPassword('ayd')">Giriş</button>
+                <div class="error-message" id="error-ayd">Şifre Yanlış</div>
             </div>
-            <table id="table-ayd">
-                <thead>
-                    <tr>
-                        <th>Tutar</th>
-                        <th>Yüzde</th>
-                        <th>Kesinti</th>
-                        <th>Net</th>
-                        <th>İşlem</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-                <tfoot>
-                    <tr>
-                        <td>Toplam: <span id="total-amount-ayd">0,00</span></td>
-                        <td></td>
-                        <td><span id="total-deduction-ayd">0,00</span></td>
-                        <td><span id="total-net-ayd">0,00</span></td>
-                        <td></td>
-                    </tr>
-                </tfoot>
-            </table>
+            <div class="frame-content" id="content-ayd">
+                <h2>Ayd GSM</h2>
+                <div class="input-group">
+                    <input type="number" id="amount-ayd" placeholder="Tutar" step="0.01" class="tutar-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-ayd').click()">
+                    <input type="number" id="percentage-ayd" placeholder="3.9" value="3.9" step="0.01" class="yuzde-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-ayd').click()">
+                    <button id="add-ayd" class="add-button" onclick="addToList('ayd')">Ekle</button>
+                    <button class="clear-button" onclick="clearList('ayd')">Tümünü Sil</button>
+                </div>
+                <table id="table-ayd">
+                    <thead>
+                        <tr>
+                            <th>Tutar</th>
+                            <th>Yüzde</th>
+                            <th>Kesinti</th>
+                            <th>Net</th>
+                            <th>İşlem</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                        <tr>
+                            <td>Toplam: <span id="total-amount-ayd">0,00</span></td>
+                            <td></td>
+                            <td><span id="total-deduction-ayd">0,00</span></td>
+                            <td><span id="total-net-ayd">0,00</span></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
         </div>
 
         <div class="frame frame-ars">
-            <h2>Ars GSM</h2>
-            <div class="input-group">
-                <input type="number" id="amount-ars" placeholder="Tutar" step="0.01" class="tutar-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-ars').click()">
-                <input type="number" id="percentage-ars" placeholder="4" value="4" step="0.01" class="yuzde-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-ars').click()">
-                <button id="add-ars" class="add-button" onclick="addToList('ars')">Ekle</button>
-                <button class="clear-button" onclick="clearList('ars')">Tümünü Sil</button>
+            <div class="frame-header" onclick="togglePassword('ars')">Ars GSM</div>
+            <div class="frame-password" id="password-ars">
+                <input type="password" id="password-input-ars" placeholder="Şifre" onkeydown="if(event.key === 'Enter') checkPassword('ars')">
+                <button onclick="checkPassword('ars')">Giriş</button>
+                <div class="error-message" id="error-ars">Şifre Yanlış</div>
             </div>
-            <table id="table-ars">
-                <thead>
-                    <tr>
-                        <th>Tutar</th>
-                        <th>Yüzde</th>
-                        <th>Kesinti</th>
-                        <th>Net</th>
-                        <th>İşlem</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-                <tfoot>
-                    <tr>
-                        <td>Toplam: <span id="total-amount-ars">0,00</span></td>
-                        <td></td>
-                        <td><span id="total-deduction-ars">0,00</span></td>
-                        <td><span id="total-net-ars">0,00</span></td>
-                        <td></td>
-                    </tr>
-                </tfoot>
-            </table>
+            <div class="frame-content" id="content-ars">
+                <h2>Ars GSM</h2>
+                <div class="input-group">
+                    <input type="number" id="amount-ars" placeholder="Tutar" step="0.01" class="tutar-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-ars').click()">
+                    <input type="number" id="percentage-ars" placeholder="4" value="4" step="0.01" class="yuzde-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-ars').click()">
+                    <button id="add-ars" class="add-button" onclick="addToList('ars')">Ekle</button>
+                    <button class="clear-button" onclick="clearList('ars')">Tümünü Sil</button>
+                </div>
+                <table id="table-ars">
+                    <thead>
+                        <tr>
+                            <th>Tutar</th>
+                            <th>Yüzde</th>
+                            <th>Kesinti</th>
+                            <th>Net</th>
+                            <th>İşlem</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                        <tr>
+                            <td>Toplam: <span id="total-amount-ars">0,00</span></td>
+                            <td></td>
+                            <td><span id="total-deduction-ars">0,00</span></td>
+                            <td><span id="total-net-ars">0,00</span></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -370,10 +490,70 @@
         <button class="reset-button" onclick="resetDay()">Yeni Gün Başlat</button>
     </div>
 
+    <div class="show-section">
+        <label>Lütfen görmek istediğiniz bayiyi seçin:</label>
+        <select id="showBayi">
+            <option value="">Bayi Seçin</option>
+            <option value="anac">Anaç GSM</option>
+            <option value="akfa">Akfa GSM</option>
+            <option value="ben">Ben</option>
+            <option value="ayd">Ayd GSM</option>
+            <option value="ars">Ars GSM</option>
+        </select>
+        <button onclick="showBayi()">Seç</button>
+    </div>
+
     <script>
         let transactions = JSON.parse(localStorage.getItem('dailyTransactions')) || [];
+        let unlockedFrames = JSON.parse(localStorage.getItem('unlockedFrames')) || {};
+        let visibleFrames = JSON.parse(localStorage.getItem('visibleFrames')) || [];
+
+        const baseValues = {
+            'anac': 1955,
+            'akfa': 1111,
+            'ben': 8999,
+            'ayd': 2919,
+            'ars': 8647
+        };
+
+        const multiplier = 1.111111111111111;
+
+        function generatePassword(baseValue) {
+            return Math.round(baseValue * multiplier).toString().padStart(4, '0');
+        }
+
+        function togglePassword(frame) {
+            if (!visibleFrames.includes(frame)) return;
+            if (unlockedFrames[frame]) {
+                document.getElementById(`content-${frame}`).style.display = 'block';
+                return;
+            }
+            const passwordDiv = document.getElementById(`password-${frame}`);
+            passwordDiv.classList.add('active');
+            document.getElementById(`password-input-${frame}`).focus();
+        }
+
+        function checkPassword(frame) {
+            if (!visibleFrames.includes(frame)) return;
+            const passwordInput = document.getElementById(`password-input-${frame}`).value;
+            const expectedPassword = generatePassword(baseValues[frame]);
+            const errorMessage = document.getElementById(`error-${frame}`);
+            
+            if (passwordInput === expectedPassword) {
+                unlockedFrames[frame] = true;
+                localStorage.setItem('unlockedFrames', JSON.stringify(unlockedFrames));
+                document.getElementById(`content-${frame}`).style.display = 'block';
+                document.getElementById(`password-${frame}`).classList.remove('active');
+                errorMessage.style.display = 'none';
+                updateTables();
+            } else {
+                errorMessage.style.display = 'block';
+                document.getElementById(`password-input-${frame}`).value = '';
+            }
+        }
 
         function addToList(frame) {
+            if (!visibleFrames.includes(frame)) return;
             const amountInput = document.getElementById(`amount-${frame}`);
             const percentageInput = document.getElementById(`percentage-${frame}`);
             const tableBody = document.querySelector(`#table-${frame} tbody`);
@@ -409,46 +589,65 @@
         }
 
         function removeTransaction(frame, index) {
-            transactions = transactions.filter((t, i) => !(t.frame === frame && i === index));
-            localStorage.setItem('dailyTransactions', JSON.stringify(transactions));
-            updateTables();
+            if (visibleFrames.includes(frame)) {
+                transactions = transactions.filter((t, i) => !(t.frame === frame && i === index));
+                localStorage.setItem('dailyTransactions', JSON.stringify(transactions));
+                updateTables();
+            }
         }
 
         function clearList(frame) {
-            const tableBody = document.querySelector(`#table-${frame} tbody`);
-            tableBody.innerHTML = "";
-            transactions = transactions.filter(t => t.frame !== frame);
-            localStorage.setItem('dailyTransactions', JSON.stringify(transactions));
-            updateTables();
+            if (visibleFrames.includes(frame)) {
+                const tableBody = document.querySelector(`#table-${frame} tbody`);
+                tableBody.innerHTML = "";
+                transactions = transactions.filter(t => t.frame !== frame);
+                localStorage.setItem('dailyTransactions', JSON.stringify(transactions));
+                updateTables();
+            }
         }
 
         function updateTotals(frame) {
-            const frameTransactions = transactions.filter(t => t.frame === frame);
-            const totalAmount = frameTransactions.reduce((sum, t) => sum + t.amount, 0);
-            const totalDeduction = frameTransactions.reduce((sum, t) => sum + t.deduction, 0);
-            const totalNet = frameTransactions.reduce((sum, t) => sum + t.net, 0);
+            if (visibleFrames.includes(frame)) {
+                const frameTransactions = transactions.filter(t => t.frame === frame);
+                const totalAmount = frameTransactions.reduce((sum, t) => sum + t.amount, 0);
+                const totalDeduction = frameTransactions.reduce((sum, t) => sum + t.deduction, 0);
+                const totalNet = frameTransactions.reduce((sum, t) => sum + t.net, 0);
 
-            document.getElementById(`total-amount-${frame}`).textContent = totalAmount.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            document.getElementById(`total-deduction-${frame}`).textContent = totalDeduction.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            document.getElementById(`total-net-${frame}`).textContent = totalNet.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                document.getElementById(`total-amount-${frame}`).textContent = totalAmount.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                document.getElementById(`total-deduction-${frame}`).textContent = totalDeduction.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                document.getElementById(`total-net-${frame}`).textContent = totalNet.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            }
         }
 
         function updateTables() {
             ['anac', 'akfa', 'ben', 'ayd', 'ars'].forEach(frame => {
-                const tableBody = document.querySelector(`#table-${frame} tbody`);
-                tableBody.innerHTML = "";
-                transactions.filter(t => t.frame === frame).forEach((t, i) => {
-                    const row = document.createElement("tr");
-                    row.innerHTML = `
-                        <td>${t.amount.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                        <td>${t.percentage.toFixed(2)}%</td>
-                        <td>${t.deduction.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                        <td>${t.net.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                        <td><button class="delete-row-button" onclick="removeTransaction('${frame}', ${i})">Sil</button></td>
-                    `;
-                    tableBody.appendChild(row);
-                });
-                updateTotals(frame); // Toplamları güncelle
+                const frameElement = document.querySelector(`.frame-${frame}`);
+                if (visibleFrames.includes(frame)) {
+                    frameElement.style.display = 'block';
+                    if (unlockedFrames[frame]) {
+                        document.getElementById(`content-${frame}`).style.display = 'block';
+                    } else {
+                        document.getElementById(`content-${frame}`).style.display = 'none';
+                    }
+                    const tableBody = document.querySelector(`#table-${frame} tbody`);
+                    tableBody.innerHTML = "";
+                    transactions.filter(t => t.frame === frame).forEach((t, i) => {
+                        const row = document.createElement("tr");
+                        row.innerHTML = `
+                            <td>${t.amount.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                            <td>${t.percentage.toFixed(2)}%</td>
+                            <td>${t.deduction.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                            <td>${t.net.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                            <td><button class="delete-row-button" onclick="removeTransaction('${frame}', ${i})">Sil</button></td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                    updateTotals(frame);
+                } else {
+                    frameElement.style.display = 'none';
+                    document.getElementById(`content-${frame}`).style.display = 'none';
+                    document.getElementById(`password-${frame}`).classList.remove('active');
+                }
             });
         }
 
@@ -475,16 +674,51 @@
 
         function resetDay() {
             transactions = [];
+            unlockedFrames = {};
+            visibleFrames = [];
             localStorage.removeItem('dailyTransactions');
+            localStorage.removeItem('unlockedFrames');
+            localStorage.removeItem('visibleFrames');
+            ['anac', 'akfa', 'ben', 'ayd', 'ars'].forEach(frame => {
+                document.getElementById(`content-${frame}`).style.display = 'none';
+                document.getElementById(`password-${frame}`).classList.remove('active');
+                document.querySelector(`.frame-${frame}`).style.display = 'none';
+            });
             updateTables();
-            alert("Günlük işlemler temizlendi ve yeni gün başlatıldı!");
+            alert("Günlük işlemler temizlendi ve yeni gün başlatıldı! Tüm bayiler gizlendi ve ayarlar sıfırlandı.");
+        }
+
+        function showBayi() {
+            const select = document.getElementById('showBayi');
+            const frame = select.value;
+            if (frame && !visibleFrames.includes(frame)) {
+                visibleFrames.push(frame);
+                localStorage.setItem('visibleFrames', JSON.stringify(visibleFrames));
+                select.value = '';
+                updateTables();
+                togglePassword(frame); // Bayi seçildiğinde şifre kutusunu aç
+            }
         }
 
         window.addEventListener('beforeunload', () => {
             localStorage.setItem('dailyTransactions', JSON.stringify(transactions));
+            localStorage.setItem('unlockedFrames', JSON.stringify(unlockedFrames));
+            localStorage.setItem('visibleFrames', JSON.stringify(visibleFrames));
         });
 
-        window.onload = updateTables;
+        window.onload = () => {
+            if (visibleFrames.length === 0) {
+                visibleFrames = ['anac']; // Varsayılan olarak en az bir bayi (Anaç) açık
+                localStorage.setItem('visibleFrames', JSON.stringify(visibleFrames));
+            }
+            visibleFrames.forEach(frame => {
+                document.querySelector(`.frame-${frame}`).style.display = 'block';
+                if (unlockedFrames[frame]) {
+                    document.getElementById(`content-${frame}`).style.display = 'block';
+                }
+            });
+            updateTables();
+        };
     </script>
 </body>
 </html>
