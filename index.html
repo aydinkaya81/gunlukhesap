@@ -315,10 +315,32 @@
                     <tbody></tbody>
                     <tfoot>
                         <tr>
-                            <td>Toplam: <span id="total-amount-anac">0,00</span></td>
+                            <td>Toplam Harcama: <span id="total-amount-anac">0,00</span></td>
                             <td></td>
                             <td><span id="total-deduction-anac">0,00</span></td>
                             <td><span id="total-net-anac">0,00</span></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class="input-group" style="margin-top: 10px;">
+                    <input type="number" id="payment-amount-anac" placeholder="Ödeme Miktarı" step="0.01" class="tutar-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-payment-anac').click()">
+                    <button id="add-payment-anac" class="add-button" onclick="addPayment('anac')">Ödeme Ekle</button>
+                    <button class="clear-button" onclick="clearPayments('anac')">Ödemeleri Sil</button>
+                </div>
+                <table id="payment-table-anac">
+                    <thead>
+                        <tr>
+                            <th>Tarih</th>
+                            <th>Ödeme Miktarı</th>
+                            <th>İşlem</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                        <tr>
+                            <td>Toplam Ödeme: <span id="total-payment-anac">0,00</span></td>
+                            <td></td>
                             <td></td>
                         </tr>
                     </tfoot>
@@ -354,10 +376,32 @@
                     <tbody></tbody>
                     <tfoot>
                         <tr>
-                            <td>Toplam: <span id="total-amount-akfa">0,00</span></td>
+                            <td>Toplam Harcama: <span id="total-amount-akfa">0,00</span></td>
                             <td></td>
                             <td><span id="total-deduction-akfa">0,00</span></td>
                             <td><span id="total-net-akfa">0,00</span></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class="input-group" style="margin-top: 10px;">
+                    <input type="number" id="payment-amount-akfa" placeholder="Ödeme Miktarı" step="0.01" class="tutar-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-payment-akfa').click()">
+                    <button id="add-payment-akfa" class="add-button" onclick="addPayment('akfa')">Ödeme Ekle</button>
+                    <button class="clear-button" onclick="clearPayments('akfa')">Ödemeleri Sil</button>
+                </div>
+                <table id="payment-table-akfa">
+                    <thead>
+                        <tr>
+                            <th>Tarih</th>
+                            <th>Ödeme Miktarı</th>
+                            <th>İşlem</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                        <tr>
+                            <td>Toplam Ödeme: <span id="total-payment-akfa">0,00</span></td>
+                            <td></td>
                             <td></td>
                         </tr>
                     </tfoot>
@@ -393,10 +437,32 @@
                     <tbody></tbody>
                     <tfoot>
                         <tr>
-                            <td>Toplam: <span id="total-amount-ben">0,00</span></td>
+                            <td>Toplam Harcama: <span id="total-amount-ben">0,00</span></td>
                             <td></td>
                             <td><span id="total-deduction-ben">0,00</span></td>
                             <td><span id="total-net-ben">0,00</span></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class="input-group" style="margin-top: 10px;">
+                    <input type="number" id="payment-amount-ben" placeholder="Ödeme Miktarı" step="0.01" class="tutar-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-payment-ben').click()">
+                    <button id="add-payment-ben" class="add-button" onclick="addPayment('ben')">Ödeme Ekle</button>
+                    <button class="clear-button" onclick="clearPayments('ben')">Ödemeleri Sil</button>
+                </div>
+                <table id="payment-table-ben">
+                    <thead>
+                        <tr>
+                            <th>Tarih</th>
+                            <th>Ödeme Miktarı</th>
+                            <th>İşlem</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                        <tr>
+                            <td>Toplam Ödeme: <span id="total-payment-ben">0,00</span></td>
+                            <td></td>
                             <td></td>
                         </tr>
                     </tfoot>
@@ -434,10 +500,32 @@
                     <tbody></tbody>
                     <tfoot>
                         <tr>
-                            <td>Toplam: <span id="total-amount-ayd">0,00</span></td>
+                            <td>Toplam Harcama: <span id="total-amount-ayd">0,00</span></td>
                             <td></td>
                             <td><span id="total-deduction-ayd">0,00</span></td>
                             <td><span id="total-net-ayd">0,00</span></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class="input-group" style="margin-top: 10px;">
+                    <input type="number" id="payment-amount-ayd" placeholder="Ödeme Miktarı" step="0.01" class="tutar-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-payment-ayd').click()">
+                    <button id="add-payment-ayd" class="add-button" onclick="addPayment('ayd')">Ödeme Ekle</button>
+                    <button class="clear-button" onclick="clearPayments('ayd')">Ödemeleri Sil</button>
+                </div>
+                <table id="payment-table-ayd">
+                    <thead>
+                        <tr>
+                            <th>Tarih</th>
+                            <th>Ödeme Miktarı</th>
+                            <th>İşlem</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                        <tr>
+                            <td>Toplam Ödeme: <span id="total-payment-ayd">0,00</span></td>
+                            <td></td>
                             <td></td>
                         </tr>
                     </tfoot>
@@ -473,10 +561,32 @@
                     <tbody></tbody>
                     <tfoot>
                         <tr>
-                            <td>Toplam: <span id="total-amount-ars">0,00</span></td>
+                            <td>Toplam Harcama: <span id="total-amount-ars">0,00</span></td>
                             <td></td>
                             <td><span id="total-deduction-ars">0,00</span></td>
                             <td><span id="total-net-ars">0,00</span></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class="input-group" style="margin-top: 10px;">
+                    <input type="number" id="payment-amount-ars" placeholder="Ödeme Miktarı" step="0.01" class="tutar-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-payment-ars').click()">
+                    <button id="add-payment-ars" class="add-button" onclick="addPayment('ars')">Ödeme Ekle</button>
+                    <button class="clear-button" onclick="clearPayments('ars')">Ödemeleri Sil</button>
+                </div>
+                <table id="payment-table-ars">
+                    <thead>
+                        <tr>
+                            <th>Tarih</th>
+                            <th>Ödeme Miktarı</th>
+                            <th>İşlem</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                        <tr>
+                            <td>Toplam Ödeme: <span id="total-payment-ars">0,00</span></td>
+                            <td></td>
                             <td></td>
                         </tr>
                     </tfoot>
@@ -579,7 +689,7 @@
             `;
             tableBody.appendChild(row);
 
-            transactions.push({ frame, amount, percentage, deduction, net, date: new Date().toLocaleString('tr-TR') });
+            transactions.push({ frame, amount, percentage, deduction, net, date: new Date().toLocaleString('tr-TR'), type: 'transaction' });
             localStorage.setItem('dailyTransactions', JSON.stringify(transactions));
 
             amountInput.value = "";
@@ -590,7 +700,7 @@
 
         function removeTransaction(frame, index) {
             if (visibleFrames.includes(frame)) {
-                transactions = transactions.filter((t, i) => !(t.frame === frame && i === index));
+                transactions = transactions.filter((t, i) => !(t.frame === frame && i === index && t.type === 'transaction'));
                 localStorage.setItem('dailyTransactions', JSON.stringify(transactions));
                 updateTables();
             }
@@ -600,7 +710,53 @@
             if (visibleFrames.includes(frame)) {
                 const tableBody = document.querySelector(`#table-${frame} tbody`);
                 tableBody.innerHTML = "";
-                transactions = transactions.filter(t => t.frame !== frame);
+                transactions = transactions.filter(t => t.frame !== frame || t.type !== 'transaction');
+                localStorage.setItem('dailyTransactions', JSON.stringify(transactions));
+                updateTables();
+            }
+        }
+
+        function addPayment(frame) {
+            if (!visibleFrames.includes(frame)) return;
+            const paymentInput = document.getElementById(`payment-amount-${frame}`);
+            const paymentTableBody = document.querySelector(`#payment-table-${frame} tbody`);
+
+            const amount = parseFloat(paymentInput.value);
+
+            if (isNaN(amount)) {
+                alert("Lütfen geçerli bir ödeme miktarı girin!");
+                return;
+            }
+
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${new Date().toLocaleString('tr-TR')}</td>
+                <td>${amount.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                <td><button class="delete-row-button" onclick="this.parentElement.parentElement.remove(); removePayment('${frame}', this.parentElement.parentElement.rowIndex - 1)">Sil</button></td>
+            `;
+            paymentTableBody.appendChild(row);
+
+            transactions.push({ frame, amount, date: new Date().toLocaleString('tr-TR'), type: 'payment' });
+            localStorage.setItem('dailyTransactions', JSON.stringify(transactions));
+
+            paymentInput.value = "";
+
+            updateTables();
+        }
+
+        function removePayment(frame, index) {
+            if (visibleFrames.includes(frame)) {
+                transactions = transactions.filter((t, i) => !(t.frame === frame && i === index && t.type === 'payment'));
+                localStorage.setItem('dailyTransactions', JSON.stringify(transactions));
+                updateTables();
+            }
+        }
+
+        function clearPayments(frame) {
+            if (visibleFrames.includes(frame)) {
+                const paymentTableBody = document.querySelector(`#payment-table-${frame} tbody`);
+                paymentTableBody.innerHTML = "";
+                transactions = transactions.filter(t => t.frame !== frame || t.type !== 'payment');
                 localStorage.setItem('dailyTransactions', JSON.stringify(transactions));
                 updateTables();
             }
@@ -608,7 +764,7 @@
 
         function updateTotals(frame) {
             if (visibleFrames.includes(frame)) {
-                const frameTransactions = transactions.filter(t => t.frame === frame);
+                const frameTransactions = transactions.filter(t => t.frame === frame && t.type === 'transaction');
                 const totalAmount = frameTransactions.reduce((sum, t) => sum + t.amount, 0);
                 const totalDeduction = frameTransactions.reduce((sum, t) => sum + t.deduction, 0);
                 const totalNet = frameTransactions.reduce((sum, t) => sum + t.net, 0);
@@ -616,6 +772,11 @@
                 document.getElementById(`total-amount-${frame}`).textContent = totalAmount.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                 document.getElementById(`total-deduction-${frame}`).textContent = totalDeduction.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                 document.getElementById(`total-net-${frame}`).textContent = totalNet.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+                const framePayments = transactions.filter(t => t.frame === frame && t.type === 'payment');
+                const totalPayment = framePayments.reduce((sum, t) => sum + t.amount, 0);
+
+                document.getElementById(`total-payment-${frame}`).textContent = totalPayment.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             }
         }
 
@@ -631,7 +792,7 @@
                     }
                     const tableBody = document.querySelector(`#table-${frame} tbody`);
                     tableBody.innerHTML = "";
-                    transactions.filter(t => t.frame === frame).forEach((t, i) => {
+                    transactions.filter(t => t.frame === frame && t.type === 'transaction').forEach((t, i) => {
                         const row = document.createElement("tr");
                         row.innerHTML = `
                             <td>${t.amount.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
@@ -641,6 +802,17 @@
                             <td><button class="delete-row-button" onclick="removeTransaction('${frame}', ${i})">Sil</button></td>
                         `;
                         tableBody.appendChild(row);
+                    });
+                    const paymentTableBody = document.querySelector(`#payment-table-${frame} tbody`);
+                    paymentTableBody.innerHTML = "";
+                    transactions.filter(t => t.frame === frame && t.type === 'payment').forEach((t, i) => {
+                        const row = document.createElement("tr");
+                        row.innerHTML = `
+                            <td>${t.date}</td>
+                            <td>${t.amount.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                            <td><button class="delete-row-button" onclick="removePayment('${frame}', ${i})">Sil</button></td>
+                        `;
+                        paymentTableBody.appendChild(row);
                     });
                     updateTotals(frame);
                 } else {
@@ -653,14 +825,16 @@
 
         function saveTransactions() {
             const csv = [
-                "Tarih,Çerçeve,Tutar (TL),Yüzde (%),Kesinti (TL),Net (TL)",
+                "Tarih,Çerçeve,Tür,Tutar (TL),Yüzde (%),Kesinti (TL),Net (TL),Ödeme Miktarı",
                 ...transactions.map(t => [
                     `"${t.date.replace(/"/g, '""')}"`,
                     t.frame,
-                    t.amount.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
-                    `${t.percentage.toFixed(2)}%`,
-                    t.deduction.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
-                    t.net.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                    t.type,
+                    t.type === 'transaction' ? t.amount.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '',
+                    t.type === 'transaction' ? `${t.percentage.toFixed(2)}%` : '',
+                    t.type === 'transaction' ? t.deduction.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '',
+                    t.type === 'transaction' ? t.net.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '',
+                    t.type === 'payment' ? t.amount.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : ''
                 ].join(","))
             ].join("\n");
             const blob = new Blob([`\uFEFF${csv}`], { type: 'text/csv;charset=utf-8;' });
@@ -696,7 +870,7 @@
                 localStorage.setItem('visibleFrames', JSON.stringify(visibleFrames));
                 select.value = '';
                 updateTables();
-                togglePassword(frame); // Bayi seçildiğinde şifre kutusunu aç
+                togglePassword(frame);
             }
         }
 
@@ -708,7 +882,7 @@
 
         window.onload = () => {
             if (visibleFrames.length === 0) {
-                visibleFrames = ['anac']; // Varsayılan olarak en az bir bayi (Anaç) açık
+                visibleFrames = ['anac'];
                 localStorage.setItem('visibleFrames', JSON.stringify(visibleFrames));
             }
             visibleFrames.forEach(frame => {
