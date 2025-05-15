@@ -1,0 +1,114 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Çarpım Tablosu Oyunu</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+  <!-- Header -->
+  <header class="bg-blue-600 text-white py-6 text-center">
+    <h1 class="text-3xl font-bold">Çarpım Tablosu Oyunu</h1>
+    <p class="mt-2 text-lg">6. Sınıf Matematik</p>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto p-6">
+    <section class="bg-white shadow-md rounded-lg p-6 border border-gray-300">
+      <h2 class="text-2xl font-semibold text-blue-800 mb-4">Oyun Kuralları</h2>
+      <p class="text-gray-700 mb-4">
+        Rastgele çarpma soruları gelecek. Cevabı yaz ve "Kontrol Et" butonuna tıkla. Her doğru cevap 10 puan kazandırır!
+      </p>
+      <div class="text-center">
+        <p id="question" class="text-xl font-medium mb-4"></p>
+        <input id="answer" type="number" class="border border-gray-300 rounded px-4 py-2 mb-4" placeholder="Cevabınızı yazın">
+        <button onclick="checkAnswer()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Kontrol Et</button>
+        <p id="result" class="mt-4 text-lg"></p>
+        <p id="score" class="mt-2 text-lg font-semibold">Skor: 0</p>
+      </div>
+    </section>
+    <section class="mt-6 text-center">
+      <a href="index.html" class="text-blue-500 underline hover:text-blue-700">Ana Sayfaya Dön</a>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-600 text-white text-center py-4">
+    <p>© 2025 xAI Grok. Tüm hakları saklıdır.</p>
+  </footer>
+
+  <script>
+    let score = 0;
+    let correctAnswer;
+
+    function newQuestion() {
+      const num1 = Math.floor(Math.random() * 10) + 1;
+      const num2 = Math.floor(Math.random() * 10) + 1;
+      correctAnswer = num1 * num2;
+      document.getElementById('question').textContent = `${num1} × ${num2} = ?`;
+      document.getElementById('answer').value = '';
+      document.getElementById('result').textContent = '';
+    }
+
+    function checkAnswer() {
+      const userAnswer = parseInt(document.getElementById('answer').value);
+      if (userAnswer === correctAnswer) {
+        document.getElementById('result').textContent = 'Doğru! 🎉';
+        document.getElementById('result').classList.add('text-green-600');
+        document.getElementById('result').classList.remove('text-red-600');
+        score += 10;
+      } else {
+        document.getElementById('result').textContent = `Yanlış! Doğru cevap: ${correctAnswer}`;
+        document.getElementById('result').classList.add('text-red-600');
+        document.getElementById('result').classList.remove('text-green-600');
+      }
+      document.getElementById('score').textContent = `Skor: ${score}`;
+      setTimeout(newQuestion, 1000);
+    }
+
+    // İlk soruyu yükle
+    newQuestion();
+  </script>
+</body>
+</html>
