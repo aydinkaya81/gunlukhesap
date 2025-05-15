@@ -40,859 +40,234 @@
         </script><!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GÜNLÜK HESAP İŞLEMLERİ</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            margin: 15px;
-            background: linear-gradient(135deg, #e0eafc, #cfdef3);
-            color: #333;
-            user-select: none;
-        }
-        .page-header {
-            text-align: center;
-            font-size: 2em;
-            color: #2c3e50;
-            margin-bottom: 15px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-            font-weight: bold;
-        }
-        .container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-        .container-bottom {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
-        .frame {
-            border: none;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1), inset 0 1px 2px rgba(255, 255, 255, 0.3);
-            transition: transform 0.2s, box-shadow 0.2s;
-            display: none;
-        }
-        .frame:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-        }
-        .frame-anac { background: #e8f0fe; }
-        .frame-akfa { background: #e6f4ea; }
-        .frame-ben { background: #f0f0f0; }
-        .frame-ayd { background: #fef6e7; }
-        .frame-ars { background: #f0e8f5; }
-        .frame h2 {
-            margin: 0 0 10px;
-            color: #2c3e50;
-            font-size: 1.2em;
-            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
-        }
-        .frame-header {
-            background: #dfe6e9;
-            padding: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: center;
-            font-size: 1.2em;
-            color: #2c3e50;
-            font-weight: bold;
-            transition: background 0.2s;
-        }
-        .frame-header:hover {
-            background: #b2bec3;
-        }
-        .frame-password {
-            display: none;
-            padding: 10px;
-            background: #f9f9f9;
-            border-radius: 8px;
-            text-align: center;
-        }
-        .frame-password.active {
-            display: block;
-        }
-        .frame-password input {
-            padding: 5px;
-            margin-right: 5px;
-            border: 1px solid #dfe6e9;
-            border-radius: 4px;
-            font-size: 12px;
-        }
-        .frame-password button {
-            padding: 5px 10px;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
-            background: linear-gradient(45deg, #3498db, #2980b9);
-            transition: background 0.2s;
-        }
-        .frame-password button:hover {
-            background: linear-gradient(45deg, #2980b9, #2c3e50);
-        }
-        .error-message {
-            color: red;
-            font-size: 12px;
-            margin-top: 5px;
-            display: none;
-        }
-        .frame-content {
-            display: none;
-        }
-        .input-group {
-            display: flex;
-            gap: 5px;
-            margin-bottom: 10px;
-        }
-        .input-group input {
-            padding: 4px;
-            font-size: 10px;
-            border: 1px solid #dfe6e9;
-            border-radius: 4px;
-            background: #f9f9f9;
-            transition: border-color 0.2s;
-        }
-        .input-group input.tutar-input {
-            width: 105px;
-        }
-        .input-group input.yuzde-input {
-            width: 70px;
-        }
-        .input-group input:focus {
-            border-color: #3498db;
-            outline: none;
-        }
-        .input-group button {
-            padding: 6px 12px;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: bold;
-            transition: background 0.2s;
-        }
-        .add-button {
-            background: linear-gradient(45deg, #3498db, #2980b9);
-        }
-        .add-button:hover {
-            background: linear-gradient(45deg, #2980b9, #2c3e50);
-        }
-        .clear-button {
-            background: linear-gradient(45deg, #e74c3c, #c0392b);
-        }
-        .clear-button:hover {
-            background: linear-gradient(45deg, #c0392b, #a93226);
-        }
-        .delete-row-button {
-            padding: 4px 8px;
-            background: #e74c3c;
-            color: white;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-            font-size: 10px;
-        }
-        .delete-row-button:hover {
-            background: #c0392b;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 5px;
-            background: #fff;
-            border-radius: 6px;
-            overflow: hidden;
-        }
-        table, th, td {
-            border: 1px solid #dfe6e9;
-        }
-        th, td {
-            padding: 6px;
-            text-align: left;
-            font-size: 12px;
-        }
-        th {
-            background: linear-gradient(45deg, #3498db, #2980b9);
-            color: white;
-            font-weight: bold;
-        }
-        td {
-            background: #f9f9f9;
-        }
-        tr:nth-child(even) td {
-            background: #ecf0f1;
-        }
-        tfoot td {
-            background: #d1ecf1;
-            font-weight: bold;
-            color: #0c5460;
-        }
-        .save-buttons {
-            text-align: center;
-            margin-top: 10px;
-        }
-        .save-buttons button {
-            padding: 8px 16px;
-            margin: 0 5px;
-            font-size: 12px;
-        }
-        .save-button {
-            background: linear-gradient(45deg, #2ecc71, #27ae60);
-        }
-        .save-button:hover {
-            background: linear-gradient(45deg, #27ae60, #219653);
-        }
-        .reset-button {
-            background: linear-gradient(45deg, #e67e22, #d35400);
-        }
-        .reset-button:hover {
-            background: linear-gradient(45deg, #d35400, #c0392b);
-        }
-        .show-section {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .show-section label {
-            font-size: 14px;
-            font-weight: bold;
-            margin-right: 10px;
-            color: #2c3e50;
-        }
-        .show-section select, .show-section button {
-            padding: 5px 10px;
-            font-size: 12px;
-            border-radius: 4px;
-        }
-        .show-section button {
-            background: linear-gradient(45deg, #2ecc71, #27ae60);
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .show-section button:hover {
-            background: linear-gradient(45deg, #27ae60, #219653);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>6. Sınıf Matematik Çalışma Sayfası</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- MathJax CDN for rendering mathematical expressions -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
-<body oncontextmenu="return false;" onkeydown="if(event.ctrlKey && event.key === 'u') return false;">
-    <h1 class="page-header">GÜNLÜK HESAP İŞLEMLERİ</h1>
+<body class="bg-gray-100 font-sans">
+  <!-- Header -->
+  <header class="bg-blue-600 text-white py-6 text-center">
+    <h1 class="text-3xl font-bold">6. Sınıf Matematik Çalışma Sayfası</h1>
+    <p class="mt-2 text-lg">Hazırlayan: xAI Grok</p>
+  </header>
 
-    <div class="container">
-        <div class="frame frame-anac">
-            <div class="frame-header" onclick="togglePassword('anac')">Anaç GSM</div>
-            <div class="frame-password" id="password-anac">
-                <input type="password" id="password-input-anac" placeholder="Şifre" onkeydown="if(event.key === 'Enter') checkPassword('anac')">
-                <button onclick="checkPassword('anac')">Giriş</button>
-                <div class="error-message" id="error-anac">Şifre Yanlış</div>
-            </div>
-            <div class="frame-content" id="content-anac">
-                <h2>Anaç GSM</h2>
-                <div class="input-group">
-                    <input type="number" id="amount-anac" placeholder="Tutar" step="0.01" class="tutar-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-anac').click()">
-                    <input type="number" id="percentage-anac" placeholder="5.5" value="5.5" step="0.01" class="yuzde-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-anac').click()">
-                    <button id="add-anac" class="add-button" onclick="addToList('anac')">Ekle</button>
-                    <button class="clear-button" onclick="clearList('anac')">Tümünü Sil</button>
-                </div>
-                <table id="table-anac">
-                    <thead>
-                        <tr>
-                            <th>Tutar</th>
-                            <th>Yüzde</th>
-                            <th>Kesinti</th>
-                            <th>Net</th>
-                            <th>İşlem</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                    <tfoot>
-                        <tr>
-                            <td>Toplam Harcama: <span id="total-amount-anac">0,00</span></td>
-                            <td></td>
-                            <td><span id="total-deduction-anac">0,00</span></td>
-                            <td><span id="total-net-anac">0,00</span></td>
-                            <td></td>
-                        </tr>
-                    </tfoot>
-                </table>
-                <div class="input-group" style="margin-top: 10px;">
-                    <input type="number" id="payment-amount-anac" placeholder="Ödeme Miktarı" step="0.01" class="tutar-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-payment-anac').click()">
-                    <button id="add-payment-anac" class="add-button" onclick="addPayment('anac')">Ödeme Ekle</button>
-                    <button class="clear-button" onclick="clearPayments('anac')">Ödemeleri Sil</button>
-                </div>
-                <table id="payment-table-anac">
-                    <thead>
-                        <tr>
-                            <th>Tarih</th>
-                            <th>Ödeme Miktarı</th>
-                            <th>İşlem</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                    <tfoot>
-                        <tr>
-                            <td>Toplam Ödeme: <span id="total-payment-anac">0,00</span></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto p-6">
+    <!-- Introduction -->
+    <section class="mb-8">
+      <p class="text-gray-700">
+        Bu çalışma sayfasında, 6. sınıf matematik müfredatına uygun temel konular yer almaktadır. Her konuda önce konu anlatımını okuyabilir, ardından soruları çözebilirsiniz. Başarılar!
+      </p>
+    </section>
+
+    <!-- Doğal Sayılar -->
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-blue-800 mb-4">Doğal Sayılar</h2>
+      <!-- Konu Anlatımı -->
+      <div class="mb-4">
+        <h3 class="text-xl font-medium text-blue-600">Konu Anlatımı</h3>
+        <p class="text-gray-700">
+          Doğal sayılar hakkında bilgi edinmek için
+          <a href="dogal_sayilar.html" class="text-blue-500 underline hover:text-blue-700">buraya tıklayın</a>.
+        </p>
+      </div>
+      <!-- Soru Çöz -->
+      <div class="mb-4">
+        <h3 class="text-xl font-medium text-blue-600">Soru Çöz</h3>
+        <div class="bg-white shadow-md rounded-lg p-6 border border-gray-300">
+          <ol class="list-decimal pl-6 space-y-2">
+            <li>\( 456 + 789 = ? \) işlemini yaparak sonucu bulunuz.</li>
+            <li>Bir bakkal, bir günde 245 ekmek sattı. Bir hafta (7 gün) boyunca her gün aynı sayıda ekmek satarsa, toplam kaç ekmek satar?</li>
+            <li>\( 1234 \) sayısının 5 katını bulunuz.</li>
+          </ol>
         </div>
+      </div>
+    </section>
 
-        <div class="frame frame-akfa">
-            <div class="frame-header" onclick="togglePassword('akfa')">Akfa GSM</div>
-            <div class="frame-password" id="password-akfa">
-                <input type="password" id="password-input-akfa" placeholder="Şifre" onkeydown="if(event.key === 'Enter') checkPassword('akfa')">
-                <button onclick="checkPassword('akfa')">Giriş</button>
-                <div class="error-message" id="error-akfa">Şifre Yanlış</div>
-            </div>
-            <div class="frame-content" id="content-akfa">
-                <h2>Akfa GSM</h2>
-                <div class="input-group">
-                    <input type="number" id="amount-akfa" placeholder="Tutar" step="0.01" class="tutar-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-akfa').click()">
-                    <input type="number" id="percentage-akfa" placeholder="4.5" value="4.5" step="0.01" class="yuzde-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-akfa').click()">
-                    <button id="add-akfa" class="add-button" onclick="addToList('akfa')">Ekle</button>
-                    <button class="clear-button" onclick="clearList('akfa')">Tümünü Sil</button>
-                </div>
-                <table id="table-akfa">
-                    <thead>
-                        <tr>
-                            <th>Tutar</th>
-                            <th>Yüzde</th>
-                            <th>Kesinti</th>
-                            <th>Net</th>
-                            <th>İşlem</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                    <tfoot>
-                        <tr>
-                            <td>Toplam Harcama: <span id="total-amount-akfa">0,00</span></td>
-                            <td></td>
-                            <td><span id="total-deduction-akfa">0,00</span></td>
-                            <td><span id="total-net-akfa">0,00</span></td>
-                            <td></td>
-                        </tr>
-                    </tfoot>
-                </table>
-                <div class="input-group" style="margin-top: 10px;">
-                    <input type="number" id="payment-amount-akfa" placeholder="Ödeme Miktarı" step="0.01" class="tutar-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-payment-akfa').click()">
-                    <button id="add-payment-akfa" class="add-button" onclick="addPayment('akfa')">Ödeme Ekle</button>
-                    <button class="clear-button" onclick="clearPayments('akfa')">Ödemeleri Sil</button>
-                </div>
-                <table id="payment-table-akfa">
-                    <thead>
-                        <tr>
-                            <th>Tarih</th>
-                            <th>Ödeme Miktarı</th>
-                            <th>İşlem</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                    <tfoot>
-                        <tr>
-                            <td>Toplam Ödeme: <span id="total-payment-akfa">0,00</span></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
+    <!-- Tam Sayılar -->
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-blue-800 mb-4">Tam Sayılar</h2>
+      <!-- Konu Anlatımı -->
+      <div class="mb-4">
+        <h3 class="text-xl font-medium text-blue-600">Konu Anlatımı</h3>
+        <p class="text-gray-700">
+          Tam sayılar hakkında bilgi edinmek için
+          <a href="tam_sayilar.html" class="text-blue-500 underline hover:text-blue-700">buraya tıklayın</a>.
+        </p>
+      </div>
+      <!-- Soru Çöz -->
+      <div class="mb-4">
+        <h3 class="text-xl font-medium text-blue-600">Soru Çöz</h3>
+        <div class="bg-white shadow-md rounded-lg p-6 border border-gray-300">
+          <ol class="list-decimal pl-6 space-y-2">
+            <li>\( (-7) + 12 = ? \) işlemini yapınız.</li>
+            <li>Bir termometre sabah \( -3^\circ \text{C} \) gösteriyor. Öğleden sonra sıcaklık 8 derece artarsa, yeni sıcaklık kaç derece olur?</li>
+            <li>\( (-15) - (-9) = ? \) işleminin sonucunu bulunuz.</li>
+          </ol>
         </div>
+      </div>
+    </section>
 
-        <div class="frame frame-ben">
-            <div class="frame-header" onclick="togglePassword('ben')">Ben</div>
-            <div class="frame-password" id="password-ben">
-                <input type="password" id="password-input-ben" placeholder="Şifre" onkeydown="if(event.key === 'Enter') checkPassword('ben')">
-                <button onclick="checkPassword('ben')">Giriş</button>
-                <div class="error-message" id="error-ben">Şifre Yanlış</div>
-            </div>
-            <div class="frame-content" id="content-ben">
-                <h2>Ben</h2>
-                <div class="input-group">
-                    <input type="number" id="amount-ben" placeholder="Tutar" step="0.01" class="tutar-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-ben').click()">
-                    <input type="number" id="percentage-ben" placeholder="5.5" value="5.5" step="0.01" class="yuzde-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-ben').click()">
-                    <button id="add-ben" class="add-button" onclick="addToList('ben')">Ekle</button>
-                    <button class="clear-button" onclick="clearList('ben')">Tümünü Sil</button>
-                </div>
-                <table id="table-ben">
-                    <thead>
-                        <tr>
-                            <th>Tutar</th>
-                            <th>Yüzde</th>
-                            <th>Kesinti</th>
-                            <th>Net</th>
-                            <th>İşlem</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                    <tfoot>
-                        <tr>
-                            <td>Toplam Harcama: <span id="total-amount-ben">0,00</span></td>
-                            <td></td>
-                            <td><span id="total-deduction-ben">0,00</span></td>
-                            <td><span id="total-net-ben">0,00</span></td>
-                            <td></td>
-                        </tr>
-                    </tfoot>
-                </table>
-                <div class="input-group" style="margin-top: 10px;">
-                    <input type="number" id="payment-amount-ben" placeholder="Ödeme Miktarı" step="0.01" class="tutar-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-payment-ben').click()">
-                    <button id="add-payment-ben" class="add-button" onclick="addPayment('ben')">Ödeme Ekle</button>
-                    <button class="clear-button" onclick="clearPayments('ben')">Ödemeleri Sil</button>
-                </div>
-                <table id="payment-table-ben">
-                    <thead>
-                        <tr>
-                            <th>Tarih</th>
-                            <th>Ödeme Miktarı</th>
-                            <th>İşlem</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                    <tfoot>
-                        <tr>
-                            <td>Toplam Ödeme: <span id="total-payment-ben">0,00</span></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
+    <!-- Kesirler -->
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-blue-800 mb-4">Kesirler</h2>
+      <!-- Konu Anlatımı -->
+      <div class="mb-4">
+        <h3 class="text-xl font-medium text-blue-600">Konu Anlatımı</h3>
+        <p class="text-gray-700">
+          Kesirler hakkında bilgi edinmek için
+          <a href="kesirler.html" class="text-blue-500 underline hover:text-blue-700">buraya tıklayın</a>.
+        </p>
+      </div>
+      <!-- Soru Çöz -->
+      <div class="mb-4">
+        <h3 class="text-xl font-medium text-blue-600">Soru Çöz</h3>
+        <div class="bg-white shadow-md rounded-lg p-6 border border-gray-300">
+          <ol class="list-decimal pl-6 space-y-2">
+            <li>\( \dfrac{3}{4} + \dfrac{2}{4} = ? \) işlemini yapınız.</li>
+            <li>Bir pasta 8 eşit dilime bölündü. Ayşe 3 dilim, Berk 2 dilim yedi. Geriye kaç dilim pasta kaldı?</li>
+            <li>\( \dfrac{5}{6} \times \dfrac{2}{3} = ? \) işleminin sonucunu bulunuz.</li>
+          </ol>
         </div>
-    </div>
+      </div>
+    </section>
 
-    <div class="container-bottom">
-        <div class="frame frame-ayd">
-            <div class="frame-header" onclick="togglePassword('ayd')">Ayd GSM</div>
-            <div class="frame-password" id="password-ayd">
-                <input type="password" id="password-input-ayd" placeholder="Şifre" onkeydown="if(event.key === 'Enter') checkPassword('ayd')">
-                <button onclick="checkPassword('ayd')">Giriş</button>
-                <div class="error-message" id="error-ayd">Şifre Yanlış</div>
-            </div>
-            <div class="frame-content" id="content-ayd">
-                <h2>Ayd GSM</h2>
-                <div class="input-group">
-                    <input type="number" id="amount-ayd" placeholder="Tutar" step="0.01" class="tutar-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-ayd').click()">
-                    <input type="number" id="percentage-ayd" placeholder="3.9" value="3.9" step="0.01" class="yuzde-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-ayd').click()">
-                    <button id="add-ayd" class="add-button" onclick="addToList('ayd')">Ekle</button>
-                    <button class="clear-button" onclick="clearList('ayd')">Tümünü Sil</button>
-                </div>
-                <table id="table-ayd">
-                    <thead>
-                        <tr>
-                            <th>Tutar</th>
-                            <th>Yüzde</th>
-                            <th>Kesinti</th>
-                            <th>Net</th>
-                            <th>İşlem</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                    <tfoot>
-                        <tr>
-                            <td>Toplam Harcama: <span id="total-amount-ayd">0,00</span></td>
-                            <td></td>
-                            <td><span id="total-deduction-ayd">0,00</span></td>
-                            <td><span id="total-net-ayd">0,00</span></td>
-                            <td></td>
-                        </tr>
-                    </tfoot>
-                </table>
-                <div class="input-group" style="margin-top: 10px;">
-                    <input type="number" id="payment-amount-ayd" placeholder="Ödeme Miktarı" step="0.01" class="tutar-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-payment-ayd').click()">
-                    <button id="add-payment-ayd" class="add-button" onclick="addPayment('ayd')">Ödeme Ekle</button>
-                    <button class="clear-button" onclick="clearPayments('ayd')">Ödemeleri Sil</button>
-                </div>
-                <table id="payment-table-ayd">
-                    <thead>
-                        <tr>
-                            <th>Tarih</th>
-                            <th>Ödeme Miktarı</th>
-                            <th>İşlem</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                    <tfoot>
-                        <tr>
-                            <td>Toplam Ödeme: <span id="total-payment-ayd">0,00</span></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
+    <!-- Ondalık Gösterim -->
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-blue-800 mb-4">Ondalık Gösterim</h2>
+      <!-- Konu Anlatımı -->
+      <div class="mb-4">
+        <h3 class="text-xl font-medium text-blue-600">Konu Anlatımı</h3>
+        <p class="text-gray-700">
+          Ondalık gösterim hakkında bilgi edinmek için
+          <a href="ondalik_gosterim.html" class="text-blue-500 underline hover:text-blue-700">buraya tıklayın</a>.
+        </p>
+      </div>
+      <!-- Soru Çöz -->
+      <div class="mb-4">
+        <h3 class="text-xl font-medium text-blue-600">Soru Çöz</h3>
+        <div class="bg-white shadow-md rounded-lg p-6 border border-gray-300">
+          <ol class="list-decimal pl-6 space-y-2">
+            <li>\( 3.45 + 2.78 = ? \) işlemini yapınız.</li>
+            <li>Bir kalem 4.50 TL, bir defter 7.25 TL. İkisini almak için kaç TL gerekir?</li>
+            <li>\( 6.4 \times 3 = ? \) işleminin sonucunu bulunuz.</li>
+          </ol>
         </div>
+      </div>
+    </section>
 
-        <div class="frame frame-ars">
-            <div class="frame-header" onclick="togglePassword('ars')">Ars GSM</div>
-            <div class="frame-password" id="password-ars">
-                <input type="password" id="password-input-ars" placeholder="Şifre" onkeydown="if(event.key === 'Enter') checkPassword('ars')">
-                <button onclick="checkPassword('ars')">Giriş</button>
-                <div class="error-message" id="error-ars">Şifre Yanlış</div>
-            </div>
-            <div class="frame-content" id="content-ars">
-                <h2>Ars GSM</h2>
-                <div class="input-group">
-                    <input type="number" id="amount-ars" placeholder="Tutar" step="0.01" class="tutar-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-ars').click()">
-                    <input type="number" id="percentage-ars" placeholder="4" value="4" step="0.01" class="yuzde-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-ars').click()">
-                    <button id="add-ars" class="add-button" onclick="addToList('ars')">Ekle</button>
-                    <button class="clear-button" onclick="clearList('ars')">Tümünü Sil</button>
-                </div>
-                <table id="table-ars">
-                    <thead>
-                        <tr>
-                            <th>Tutar</th>
-                            <th>Yüzde</th>
-                            <th>Kesinti</th>
-                            <th>Net</th>
-                            <th>İşlem</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                    <tfoot>
-                        <tr>
-                            <td>Toplam Harcama: <span id="total-amount-ars">0,00</span></td>
-                            <td></td>
-                            <td><span id="total-deduction-ars">0,00</span></td>
-                            <td><span id="total-net-ars">0,00</span></td>
-                            <td></td>
-                        </tr>
-                    </tfoot>
-                </table>
-                <div class="input-group" style="margin-top: 10px;">
-                    <input type="number" id="payment-amount-ars" placeholder="Ödeme Miktarı" step="0.01" class="tutar-input" onkeydown="if(event.key === 'Enter') document.getElementById('add-payment-ars').click()">
-                    <button id="add-payment-ars" class="add-button" onclick="addPayment('ars')">Ödeme Ekle</button>
-                    <button class="clear-button" onclick="clearPayments('ars')">Ödemeleri Sil</button>
-                </div>
-                <table id="payment-table-ars">
-                    <thead>
-                        <tr>
-                            <th>Tarih</th>
-                            <th>Ödeme Miktarı</th>
-                            <th>İşlem</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                    <tfoot>
-                        <tr>
-                            <td>Toplam Ödeme: <span id="total-payment-ars">0,00</span></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
+    <!-- Oran ve Orantı -->
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-blue-800 mb-4">Oran ve Orantı</h2>
+      <!-- Konu Anlatımı -->
+      <div class="mb-4">
+        <h3 class="text-xl font-medium text-blue-600">Konu Anlatımı</h3>
+        <p class="text-gray-700">
+          Oran ve orantı hakkında bilgi edinmek için
+          <a href="oran_ve_oranti.html" class="text-blue-500 underline hover:text-blue-700">buraya tıklayın</a>.
+        </p>
+      </div>
+      <!-- Soru Çöz -->
+      <div class="mb-4">
+        <h3 class="text-xl font-medium text-blue-600">Soru Çöz</h3>
+        <div class="bg-white shadow-md rounded-lg p-6 border border-gray-300">
+          <ol class="list-decimal pl-6 space-y-2">
+            <li>Bir tarifte 2 bardak un için 3 bardak su kullanılıyor. 6 bardak un için kaç bardak su gerekir?</li>
+            <li>Bir araba 4 saatte 240 km yol gidiyor. Aynı hızla 6 saatte kaç km yol gider?</li>
+            <li>Bir bahçede 5 elma ağacına karşılık 3 armut ağacı var. Toplam 40 ağaç varsa, kaçı elma ağacıdır?</li>
+          </ol>
         </div>
-    </div>
+      </div>
+    </section>
 
-    <div class="save-buttons">
-        <button class="save-button" onclick="saveTransactions()">Gün Sonu Kaydet</button>
-        <button class="reset-button" onclick="resetDay()">Yeni Gün Başlat</button>
-    </div>
+    <!-- Yüzdeler -->
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-blue-800 mb-4">Yüzdeler</h2>
+      <!-- Konu Anlatımı -->
+      <div class="mb-4">
+        <h3 class="text-xl font-medium text-blue-600">Konu Anlatımı</h3>
+        <p class="text-gray-700">
+          Yüzdeler hakkında bilgi edinmek için
+          <a href="yuzdeler.html" class="text-blue-500 underline hover:text-blue-700">buraya tıklayın</a>.
+        </p>
+      </div>
+      <!-- Soru Çöz -->
+      <div class="mb-4">
+        <h3 class="text-xl font-medium text-blue-600">Soru Çöz</h3>
+        <div class="bg-white shadow-md rounded-lg p-6 border border-gray-300">
+          <ol class="list-decimal pl-6 space-y-2">
+            <li>200 TL’nin \%25’i kaç TL’dir?</li>
+            <li>Bir gömlek 80 TL’den \%20 indirimle satılıyor. İndirimli fiyatı kaç TL’dir?</li>
+            <li>Bir sınıfta 30 öğrencinin \%60’ı kızdır. Kaç öğrenci kızdır?</li>
+          </ol>
+        </div>
+      </div>
+    </section>
 
-    <div class="show-section">
-        <label>Lütfen görmek istediğiniz bayiyi seçin:</label>
-        <select id="showBayi">
-            <option value="">Bayi Seçin</option>
-            <option value="anac">Anaç GSM</option>
-            <option value="akfa">Akfa GSM</option>
-            <option value="ben">Ben</option>
-            <option value="ayd">Ayd GSM</option>
-            <option value="ars">Ars GSM</option>
-        </select>
-        <button onclick="showBayi()">Seç</button>
-    </div>
+    <!-- Cebirsel İfadeler -->
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-blue-800 mb-4">Cebirsel İfadeler</h2>
+      <!-- Konu Anlatımı -->
+      <div class="mb-4">
+        <h3 class="text-xl font-medium text-blue-600">Konu Anlatımı</h3>
+        <p class="text-gray-700">
+          Cebirsel ifadeler hakkında bilgi edinmek için
+          <a href="cebirsel_ifadeler.html" class="text-blue-500 underline hover:text-blue-700">buraya tıklayın</a>.
+        </p>
+      </div>
+      <!-- Soru Çöz -->
+      <div class="mb-4">
+        <h3 class="text-xl font-medium text-blue-600">Soru Çöz</h3>
+        <div class="bg-white shadow-md rounded-lg p-6 border border-gray-300">
+          <ol class="list-decimal pl-6 space-y-2">
+            <li>\( x = 5 \) için \( 3x + 7 \) ifadesinin değerini bulunuz.</li>
+            <li>Bir sayının 4 katının 9 eksiği \( 2y - 5 \) ise, \( y = 7 \) için bu sayıyı bulunuz.</li>
+            <li>\( 2a + 3b \) ifadesinde \( a = 4 \) ve \( b = 2 \) ise, ifadenin değerini hesaplayınız.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
 
-    <script>
-        let transactions = JSON.parse(localStorage.getItem('dailyTransactions')) || [];
-        let unlockedFrames = JSON.parse(localStorage.getItem('unlockedFrames')) || {};
-        let visibleFrames = JSON.parse(localStorage.getItem('visibleFrames')) || [];
+    <!-- Geometrik Şekiller ve Alan Ölçme -->
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-blue-800 mb-4">Geometrik Şekiller ve Alan Ölçme</h2>
+      <!-- Konu Anlatımı -->
+      <div class="mb-4">
+        <h3 class="text-xl font-medium text-blue-600">Konu Anlatımı</h3>
+        <p class="text-gray-700">
+          Geometrik şekiller ve alan ölçme hakkında bilgi edinmek için
+          <a href="geometrik_sekiller.html" class="text-blue-500 underline hover:text-blue-700">buraya tıklayın</a>.
+        </p>
+      </div>
+      <!-- Soru Çöz -->
+      <div class="mb-4">
+        <h3 class="text-xl font-medium text-blue-600">Soru Çöz</h3>
+        <div class="bg-white shadow-md rounded-lg p-6 border border-gray-300">
+          <ol class="list-decimal pl-6 space-y-2">
+            <li>Bir karenin bir kenarı 6 cm ise, çevresi ve alanı kaç cm/cm²’dir?</li>
+            <li>Bir dikdörtgenin uzun kenarı 8 cm, kısa kenarı 5 cm’dir. Alanı kaç cm²’dir?</li>
+            <li>Bir üçgenin tabanı 10 cm, yüksekliği 4 cm ise, alanı kaç cm²’dir?</li>
+          </ol>
+        </div>
+      </div>
+    </section>
 
-        const baseValues = {
-            'anac': 1955,
-            'akfa': 1111,
-            'ben': 8999,
-            'ayd': 2919,
-            'ars': 8647
-        };
+    <!-- Closing Note -->
+    <section>
+      <p class="text-gray-700">
+        Soruları çözdükten sonra cevaplarınızı kontrol edin ve hangi konularda daha fazla pratik yapmanız gerektiğini belirleyin. Matematikte bol pratik başarıyı getirir!
+      </p>
+    </section>
+  </main>
 
-        const multiplier = 1.111111111111111;
-
-        function generatePassword(baseValue) {
-            return Math.round(baseValue * multiplier).toString().padStart(4, '0');
-        }
-
-        function togglePassword(frame) {
-            if (!visibleFrames.includes(frame)) return;
-            if (unlockedFrames[frame]) {
-                document.getElementById(`content-${frame}`).style.display = 'block';
-                return;
-            }
-            const passwordDiv = document.getElementById(`password-${frame}`);
-            passwordDiv.classList.add('active');
-            document.getElementById(`password-input-${frame}`).focus();
-        }
-
-        function checkPassword(frame) {
-            if (!visibleFrames.includes(frame)) return;
-            const passwordInput = document.getElementById(`password-input-${frame}`).value;
-            const expectedPassword = generatePassword(baseValues[frame]);
-            const errorMessage = document.getElementById(`error-${frame}`);
-            
-            if (passwordInput === expectedPassword) {
-                unlockedFrames[frame] = true;
-                localStorage.setItem('unlockedFrames', JSON.stringify(unlockedFrames));
-                document.getElementById(`content-${frame}`).style.display = 'block';
-                document.getElementById(`password-${frame}`).classList.remove('active');
-                errorMessage.style.display = 'none';
-                updateTables();
-            } else {
-                errorMessage.style.display = 'block';
-                document.getElementById(`password-input-${frame}`).value = '';
-            }
-        }
-
-        function addToList(frame) {
-            if (!visibleFrames.includes(frame)) return;
-            const amountInput = document.getElementById(`amount-${frame}`);
-            const percentageInput = document.getElementById(`percentage-${frame}`);
-            const tableBody = document.querySelector(`#table-${frame} tbody`);
-
-            const amount = parseFloat(amountInput.value);
-            const percentage = parseFloat(percentageInput.value);
-
-            if (isNaN(amount) || isNaN(percentage)) {
-                alert("Lütfen geçerli bir tutar ve yüzde girin!");
-                return;
-            }
-
-            const deduction = (amount * percentage) / 100;
-            const net = amount - deduction;
-
-            const row = document.createElement("tr");
-            row.innerHTML = `
-                <td>${amount.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                <td>${percentage.toFixed(2)}%</td>
-                <td>${deduction.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                <td>${net.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                <td><button class="delete-row-button" onclick="this.parentElement.parentElement.remove(); removeTransaction('${frame}', this.parentElement.parentElement.rowIndex - 1)">Sil</button></td>
-            `;
-            tableBody.appendChild(row);
-
-            transactions.push({ frame, amount, percentage, deduction, net, date: new Date().toLocaleString('tr-TR'), type: 'transaction' });
-            localStorage.setItem('dailyTransactions', JSON.stringify(transactions));
-
-            amountInput.value = "";
-            percentageInput.value = percentageInput.placeholder;
-
-            updateTables();
-        }
-
-        function removeTransaction(frame, index) {
-            if (visibleFrames.includes(frame)) {
-                transactions = transactions.filter((t, i) => !(t.frame === frame && i === index && t.type === 'transaction'));
-                localStorage.setItem('dailyTransactions', JSON.stringify(transactions));
-                updateTables();
-            }
-        }
-
-        function clearList(frame) {
-            if (visibleFrames.includes(frame)) {
-                const tableBody = document.querySelector(`#table-${frame} tbody`);
-                tableBody.innerHTML = "";
-                transactions = transactions.filter(t => t.frame !== frame || t.type !== 'transaction');
-                localStorage.setItem('dailyTransactions', JSON.stringify(transactions));
-                updateTables();
-            }
-        }
-
-        function addPayment(frame) {
-            if (!visibleFrames.includes(frame)) return;
-            const paymentInput = document.getElementById(`payment-amount-${frame}`);
-            const paymentTableBody = document.querySelector(`#payment-table-${frame} tbody`);
-
-            const amount = parseFloat(paymentInput.value);
-
-            if (isNaN(amount)) {
-                alert("Lütfen geçerli bir ödeme miktarı girin!");
-                return;
-            }
-
-            const row = document.createElement("tr");
-            row.innerHTML = `
-                <td>${new Date().toLocaleString('tr-TR')}</td>
-                <td>${amount.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                <td><button class="delete-row-button" onclick="this.parentElement.parentElement.remove(); removePayment('${frame}', this.parentElement.parentElement.rowIndex - 1)">Sil</button></td>
-            `;
-            paymentTableBody.appendChild(row);
-
-            transactions.push({ frame, amount, date: new Date().toLocaleString('tr-TR'), type: 'payment' });
-            localStorage.setItem('dailyTransactions', JSON.stringify(transactions));
-
-            paymentInput.value = "";
-
-            updateTables();
-        }
-
-        function removePayment(frame, index) {
-            if (visibleFrames.includes(frame)) {
-                transactions = transactions.filter((t, i) => !(t.frame === frame && i === index && t.type === 'payment'));
-                localStorage.setItem('dailyTransactions', JSON.stringify(transactions));
-                updateTables();
-            }
-        }
-
-        function clearPayments(frame) {
-            if (visibleFrames.includes(frame)) {
-                const paymentTableBody = document.querySelector(`#payment-table-${frame} tbody`);
-                paymentTableBody.innerHTML = "";
-                transactions = transactions.filter(t => t.frame !== frame || t.type !== 'payment');
-                localStorage.setItem('dailyTransactions', JSON.stringify(transactions));
-                updateTables();
-            }
-        }
-
-        function updateTotals(frame) {
-            if (visibleFrames.includes(frame)) {
-                const frameTransactions = transactions.filter(t => t.frame === frame && t.type === 'transaction');
-                const totalAmount = frameTransactions.reduce((sum, t) => sum + t.amount, 0);
-                const totalDeduction = frameTransactions.reduce((sum, t) => sum + t.deduction, 0);
-                const totalNet = frameTransactions.reduce((sum, t) => sum + t.net, 0);
-
-                document.getElementById(`total-amount-${frame}`).textContent = totalAmount.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                document.getElementById(`total-deduction-${frame}`).textContent = totalDeduction.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                document.getElementById(`total-net-${frame}`).textContent = totalNet.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-
-                const framePayments = transactions.filter(t => t.frame === frame && t.type === 'payment');
-                const totalPayment = framePayments.reduce((sum, t) => sum + t.amount, 0);
-
-                document.getElementById(`total-payment-${frame}`).textContent = totalPayment.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            }
-        }
-
-        function updateTables() {
-            ['anac', 'akfa', 'ben', 'ayd', 'ars'].forEach(frame => {
-                const frameElement = document.querySelector(`.frame-${frame}`);
-                if (visibleFrames.includes(frame)) {
-                    frameElement.style.display = 'block';
-                    if (unlockedFrames[frame]) {
-                        document.getElementById(`content-${frame}`).style.display = 'block';
-                    } else {
-                        document.getElementById(`content-${frame}`).style.display = 'none';
-                    }
-                    const tableBody = document.querySelector(`#table-${frame} tbody`);
-                    tableBody.innerHTML = "";
-                    transactions.filter(t => t.frame === frame && t.type === 'transaction').forEach((t, i) => {
-                        const row = document.createElement("tr");
-                        row.innerHTML = `
-                            <td>${t.amount.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                            <td>${t.percentage.toFixed(2)}%</td>
-                            <td>${t.deduction.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                            <td>${t.net.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                            <td><button class="delete-row-button" onclick="removeTransaction('${frame}', ${i})">Sil</button></td>
-                        `;
-                        tableBody.appendChild(row);
-                    });
-                    const paymentTableBody = document.querySelector(`#payment-table-${frame} tbody`);
-                    paymentTableBody.innerHTML = "";
-                    transactions.filter(t => t.frame === frame && t.type === 'payment').forEach((t, i) => {
-                        const row = document.createElement("tr");
-                        row.innerHTML = `
-                            <td>${t.date}</td>
-                            <td>${t.amount.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                            <td><button class="delete-row-button" onclick="removePayment('${frame}', ${i})">Sil</button></td>
-                        `;
-                        paymentTableBody.appendChild(row);
-                    });
-                    updateTotals(frame);
-                } else {
-                    frameElement.style.display = 'none';
-                    document.getElementById(`content-${frame}`).style.display = 'none';
-                    document.getElementById(`password-${frame}`).classList.remove('active');
-                }
-            });
-        }
-
-        function saveTransactions() {
-            const csv = [
-                "Tarih,Çerçeve,Tür,Tutar (TL),Yüzde (%),Kesinti (TL),Net (TL),Ödeme Miktarı",
-                ...transactions.map(t => [
-                    `"${t.date.replace(/"/g, '""')}"`,
-                    t.frame,
-                    t.type,
-                    t.type === 'transaction' ? t.amount.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '',
-                    t.type === 'transaction' ? `${t.percentage.toFixed(2)}%` : '',
-                    t.type === 'transaction' ? t.deduction.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '',
-                    t.type === 'transaction' ? t.net.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '',
-                    t.type === 'payment' ? t.amount.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : ''
-                ].join(","))
-            ].join("\n");
-            const blob = new Blob([`\uFEFF${csv}`], { type: 'text/csv;charset=utf-8;' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `gunluk_islemler_${new Date().toLocaleDateString('tr-TR').replace(/\//g, '-')}.csv`;
-            a.click();
-            window.URL.revokeObjectURL(url);
-        }
-
-        function resetDay() {
-            transactions = [];
-            unlockedFrames = {};
-            visibleFrames = [];
-            localStorage.removeItem('dailyTransactions');
-            localStorage.removeItem('unlockedFrames');
-            localStorage.removeItem('visibleFrames');
-            ['anac', 'akfa', 'ben', 'ayd', 'ars'].forEach(frame => {
-                document.getElementById(`content-${frame}`).style.display = 'none';
-                document.getElementById(`password-${frame}`).classList.remove('active');
-                document.querySelector(`.frame-${frame}`).style.display = 'none';
-            });
-            updateTables();
-            alert("Günlük işlemler temizlendi ve yeni gün başlatıldı! Tüm bayiler gizlendi ve ayarlar sıfırlandı.");
-        }
-
-        function showBayi() {
-            const select = document.getElementById('showBayi');
-            const frame = select.value;
-            if (frame && !visibleFrames.includes(frame)) {
-                visibleFrames.push(frame);
-                localStorage.setItem('visibleFrames', JSON.stringify(visibleFrames));
-                select.value = '';
-                updateTables();
-                togglePassword(frame);
-            }
-        }
-
-        window.addEventListener('beforeunload', () => {
-            localStorage.setItem('dailyTransactions', JSON.stringify(transactions));
-            localStorage.setItem('unlockedFrames', JSON.stringify(unlockedFrames));
-            localStorage.setItem('visibleFrames', JSON.stringify(visibleFrames));
-        });
-
-        window.onload = () => {
-            if (visibleFrames.length === 0) {
-                visibleFrames = ['anac'];
-                localStorage.setItem('visibleFrames', JSON.stringify(visibleFrames));
-            }
-            visibleFrames.forEach(frame => {
-                document.querySelector(`.frame-${frame}`).style.display = 'block';
-                if (unlockedFrames[frame]) {
-                    document.getElementById(`content-${frame}`).style.display = 'block';
-                }
-            });
-            updateTables();
-        };
-    </script>
+  <!-- Footer -->
+  <footer class="bg-blue-600 text-white text-center py-4">
+    <p>© 2025 xAI Grok. Tüm hakları saklıdır.</p>
+  </footer>
 </body>
 </html>
