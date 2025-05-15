@@ -48,6 +48,20 @@
   <!-- MathJax CDN for rendering mathematical expressions -->
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    @media print {
+      header, footer, .no-print {
+        display: none;
+      }
+      main {
+        margin: 0;
+        padding: 0;
+      }
+      section {
+        break-inside: avoid;
+      }
+    }
+  </style>
 </head>
 <body class="bg-gray-100 font-sans">
   <!-- Header -->
@@ -55,6 +69,13 @@
     <h1 class="text-3xl font-bold">6. Sınıf Matematik Çalışma Sayfası</h1>
     <p class="mt-2 text-lg">Hazırlayan: xAI Grok</p>
   </header>
+
+  <!-- Print Button -->
+  <div class="max-w-4xl mx-auto p-6 no-print">
+    <button onclick="window.print()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+      Yazdır
+    </button>
+  </div>
 
   <!-- Main Content -->
   <main class="max-w-4xl mx-auto p-6">
@@ -84,6 +105,13 @@
             <li>\( 456 + 789 = ? \) işlemini yaparak sonucu bulunuz.</li>
             <li>Bir bakkal, bir günde 245 ekmek sattı. Bir hafta (7 gün) boyunca her gün aynı sayıda ekmek satarsa, toplam kaç ekmek satar?</li>
             <li>\( 1234 \) sayısının 5 katını bulunuz.</li>
+            <li>\( 567 - 234 = ? \) işlemini yapınız.</li>
+            <li>Bir kutuda 12 kalem var. 8 kutuda toplam kaç kalem olur?</li>
+            <li>\( 3456 \div 4 = ? \) işleminin sonucunu bulunuz.</li>
+            <li>Bir bahçede 150 gül var. Her gün 15 gül toplanırsa, 5 günde kaç gül toplanır?</li>
+            <li>\( 789 \times 3 = ? \) işlemini yapınız.</li>
+            <li>Bir araba 1 saatte 60 km yol gidiyor. 4 saatte kaç km yol gider?</li>
+            <li>\( 2500 + 1750 = ? \) işleminin sonucunu bulunuz.</li>
           </ol>
         </div>
       </div>
@@ -108,6 +136,13 @@
             <li>\( (-7) + 12 = ? \) işlemini yapınız.</li>
             <li>Bir termometre sabah \( -3^\circ \text{C} \) gösteriyor. Öğleden sonra sıcaklık 8 derece artarsa, yeni sıcaklık kaç derece olur?</li>
             <li>\( (-15) - (-9) = ? \) işleminin sonucunu bulunuz.</li>
+            <li>\( 4 + (-6) = ? \) işlemini yapınız.</li>
+            <li>\( (-8) + (-5) = ? \) işleminin sonucunu bulunuz.</li>
+            <li>Bir asansör 2. katta. 5 kat aşağı inerse hangi katta olur?</li>
+            <li>\( (-12) + 20 = ? \) işlemini yapınız.</li>
+            <li>\( 7 - (-3) = ? \) işleminin sonucunu bulunuz.</li>
+            <li>Bir borç 15 TL. 10 TL ödenirse kalan borç kaç TL olur?</li>
+            <li>\( (-4) - 5 = ? \) işlemini yapınız.</li>
           </ol>
         </div>
       </div>
@@ -132,6 +167,13 @@
             <li>\( \dfrac{3}{4} + \dfrac{2}{4} = ? \) işlemini yapınız.</li>
             <li>Bir pasta 8 eşit dilime bölündü. Ayşe 3 dilim, Berk 2 dilim yedi. Geriye kaç dilim pasta kaldı?</li>
             <li>\( \dfrac{5}{6} \times \dfrac{2}{3} = ? \) işleminin sonucunu bulunuz.</li>
+            <li>\( \dfrac{7}{8} - \dfrac{3}{8} = ? \) işlemini yapınız.</li>
+            <li>Bir kumaş 5/6 metre. 1/3’ü kullanılırsa kalan kaç metre olur?</li>
+            <li>\( \dfrac{4}{5} \div \dfrac{2}{3} = ? \) işlemini yapınız.</li>
+            <li>Bir bahçenin \( \dfrac{2}{7} \)’si ekildi. Kalan kısım kaçtır?</li>
+            <li>\( \dfrac{3}{5} + \dfrac{1}{5} = ? \) işlemini yapınız.</li>
+            <li>Bir kutuda 10 şeker var. \( \dfrac{3}{5} \)’i yenirse kaç şeker kalır?</li>
+            <li>\( \dfrac{2}{3} \times \dfrac{9}{10} = ? \) işlemini yapınız.</li>
           </ol>
         </div>
       </div>
@@ -156,6 +198,13 @@
             <li>\( 3.45 + 2.78 = ? \) işlemini yapınız.</li>
             <li>Bir kalem 4.50 TL, bir defter 7.25 TL. İkisini almak için kaç TL gerekir?</li>
             <li>\( 6.4 \times 3 = ? \) işleminin sonucunu bulunuz.</li>
+            <li>\( 8.9 - 3.2 = ? \) işlemini yapınız.</li>
+            <li>Bir ürün 12.75 TL. 4 tane alınırsa kaç TL ödenir?</li>
+            <li>\( 15.6 \div 3 = ? \) işlemini yapınız.</li>
+            <li>Bir yol 7.8 km. 2 günde gidilirse günlük kaç km yol alınır?</li>
+            <li>\( 2.5 + 4.75 = ? \) işlemini yapınız.</li>
+            <li>Bir şişe su 1.25 TL. 6 şişe kaç TL eder?</li>
+            <li>\( 9.3 \times 2 = ? \) işlemini yapınız.</li>
           </ol>
         </div>
       </div>
@@ -180,6 +229,13 @@
             <li>Bir tarifte 2 bardak un için 3 bardak su kullanılıyor. 6 bardak un için kaç bardak su gerekir?</li>
             <li>Bir araba 4 saatte 240 km yol gidiyor. Aynı hızla 6 saatte kaç km yol gider?</li>
             <li>Bir bahçede 5 elma ağacına karşılık 3 armut ağacı var. Toplam 40 ağaç varsa, kaçı elma ağacıdır?</li>
+            <li>3 kalem 9 TL ise, 5 kalem kaç TL’dir?</li>
+            <li>Bir işçi 6 günde 12 iş bitiriyor. Aynı hızla 9 günde kaç iş bitirir?</li>
+            <li>4 litre süt 20 TL ise, 7 litre süt kaç TL’dir?</li>
+            <li>Bir sınıfta 3 erkek öğrenciye karşılık 4 kız öğrenci var. Toplam 28 öğrenci varsa, kaçı kızdır?</li>
+            <li>2 kg elma 10 TL ise, 8 kg elma kaç TL’dir?</li>
+            <li>Bir makine 5 saatte 100 parça üretiyor. 7 saatte kaç parça üretir?</li>
+            <li>6 ekmek 12 TL ise, 9 ekmek kaç TL’dir?</li>
           </ol>
         </div>
       </div>
@@ -204,6 +260,13 @@
             <li>200 TL’nin \%25’i kaç TL’dir?</li>
             <li>Bir gömlek 80 TL’den \%20 indirimle satılıyor. İndirimli fiyatı kaç TL’dir?</li>
             <li>Bir sınıfta 30 öğrencinin \%60’ı kızdır. Kaç öğrenci kızdır?</li>
+            <li>150 TL’nin \%10’u kaç TL’dir?</li>
+            <li>Bir ayakkabı 120 TL’den \%15 indirimle satılıyor. İndirimli fiyatı nedir?</li>
+            <li>500 TL’nin \%40’ı kaç TL’dir?</li>
+            <li>Bir testte 50 sorunun \%80’i doğru cevaplandı. Kaç soru doğru cevaplandı?</li>
+            <li>Bir ürün 60 TL’den \%25 zamlandı. Yeni fiyatı kaç TL’dir?</li>
+            <li>400 TL’nin \%5’i kaç TL’dir?</li>
+            <li>Bir okulda 200 öğrencinin \%35’i spor kulübüne üye. Kaç öğrenci üye?</li>
           </ol>
         </div>
       </div>
@@ -228,6 +291,13 @@
             <li>\( x = 5 \) için \( 3x + 7 \) ifadesinin değerini bulunuz.</li>
             <li>Bir sayının 4 katının 9 eksiği \( 2y - 5 \) ise, \( y = 7 \) için bu sayıyı bulunuz.</li>
             <li>\( 2a + 3b \) ifadesinde \( a = 4 \) ve \( b = 2 \) ise, ifadenin değerini hesaplayınız.</li>
+            <li>\( x = 3 \) için \( 5x - 2 \) ifadesinin değerini bulunuz.</li>
+            <li>\( 4m + 6 \) ifadesinde \( m = 2 \) ise, ifadenin değerini hesaplayınız.</li>
+            <li>Bir sayının 3 katı \( 2n + 1 \) ise, \( n = 4 \) için bu sayıyı bulunuz.</li>
+            <li>\( 7p - 3 \) ifadesinde \( p = 5 \) ise, ifadenin değerini bulunuz.</li>
+            <li>\( 2x + 5y \) ifadesinde \( x = 1 \) ve \( y = 3 \) ise, ifadenin değerini hesaplayınız.</li>
+            <li>\( k = 6 \) için \( 8 - 2k \) ifadesinin değerini bulunuz.</li>
+            <li>Bir sayının 5 katı \( 3t + 2 \) ise, \( t = 3 \) için bu sayıyı bulunuz.</li>
           </ol>
         </div>
       </div>
@@ -252,6 +322,13 @@
             <li>Bir karenin bir kenarı 6 cm ise, çevresi ve alanı kaç cm/cm²’dir?</li>
             <li>Bir dikdörtgenin uzun kenarı 8 cm, kısa kenarı 5 cm’dir. Alanı kaç cm²’dir?</li>
             <li>Bir üçgenin tabanı 10 cm, yüksekliği 4 cm ise, alanı kaç cm²’dir?</li>
+            <li>Bir karenin çevresi 20 cm ise, alanı kaç cm²’dir?</li>
+            <li>Bir dikdörtgenin alanı 24 cm², kısa kenarı 4 cm. Uzun kenarı kaç cm’dir?</li>
+            <li>Bir üçgenin alanı 15 cm², tabanı 5 cm. Yüksekliği kaç cm’dir?</li>
+            <li>Bir karenin bir kenarı 9 cm ise, çevresi kaç cm’dir?</li>
+            <li>Bir dikdörtgenin uzun kenarı 10 cm, kısa kenarı 3 cm. Çevresi kaç cm’dir?</li>
+            <li>Bir üçgenin tabanı 8 cm, yüksekliği 6 cm. Alanı kaç cm²’dir?</li>
+            <li>Bir karenin alanı 16 cm² ise, bir kenarı kaç cm’dir?</li>
           </ol>
         </div>
       </div>
