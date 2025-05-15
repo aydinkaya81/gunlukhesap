@@ -1,0 +1,97 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doğal Sayılar - Konu Anlatımı</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- MathJax CDN for rendering mathematical expressions -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+  <!-- Header -->
+  <header class="bg-blue-600 text-white py-6 text-center">
+    <h1 class="text-3xl font-bold">Doğal Sayılar - Konu Anlatımı</h1>
+    <p class="mt-2 text-lg">6. Sınıf Matematik</p>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto p-6">
+    <section class="bg-white shadow-md rounded-lg p-6 border border-gray-300">
+      <h2 class="text-2xl font-semibold text-blue-800 mb-4">Doğal Sayılar Nedir?</h2>
+      <p class="text-gray-700 mb-4">
+        Doğal sayılar, sayma işleminde kullandığımız sayılardır. \( 0 \) veya \( 1 \) ile başlar ve sonsuza kadar devam eder. Örneğin:
+        \[
+        0, 1, 2, 3, 4, 5, \ldots
+        \]
+        (Bazı kaynaklarda doğal sayılar \( 1 \)'den başlar, ancak 6. sınıf müfredatında genellikle \( 0 \) dahil edilir.)
+      </p>
+      <h3 class="text-xl font-medium text-blue-600 mb-2">Doğal Sayılarla İşlemler</h3>
+      <ul class="list-disc pl-6 space-y-2 text-gray-700">
+        <li><strong>Toplama:</strong> İki doğal sayıyı toplarken, sayıları birleştiririz. Örneğin: \( 5 + 3 = 8 \).</li>
+        <li><strong>Çıkarma:</strong> Bir doğal sayıdan diğerini çıkarırız. Örneğin: \( 7 - 2 = 5 \). (Sonuç negatif olamaz.)</li>
+        <li><strong>Çarpma:</strong> Bir sayıyı diğer sayıyla tekrar tekrar toplarız. Örneğin: \( 4 \times 3 = 12 \).</li>
+        <li><strong>Bölme:</strong> Bir sayıyı eşit parçalara ayırırız. Örneğin: \( 12 \div 3 = 4 \).</li>
+      </ul>
+      <h3 class="text-xl font-medium text-blue-600 mb-2">Örnek Soru</h3>
+      <p class="text-gray-700">
+        Bir sınıfta 15 erkek ve 12 kız öğrenci var. Toplam kaç öğrenci vardır?
+        <br>
+        <strong>Çözüm:</strong> \( 15 + 12 = 27 \). Toplam 27 öğrenci vardır.
+      </p>
+    </section>
+    <section class="mt-6">
+      <p class="text-gray-700">
+        Konu anlatımını okuduktan sonra sorulara geçmek için
+        <a href="index.html" class="text-blue-500 underline hover:text-blue-700">ana sayfaya dönün</a>.
+      </p>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-600 text-white text-center py-4">
+    <p>© 2025 xAI Grok. Tüm hakları saklıdır.</p>
+  </footer>
+</body>
+</html>
